@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">FreeHandPolygon</string>
+    <string name="google_map_key">Your Api key here</string>
+</resources>
