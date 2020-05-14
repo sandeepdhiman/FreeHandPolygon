@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -22,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener {
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener, GoogleMap.OnPolygonClickListener {
     private GoogleMap map;
     ArrayList<LatLng> latLngArrayListPolygon = new ArrayList<>();
     ArrayList<Double> distancesFromMidPointsOfPolygonEdges = new ArrayList<>();
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
         map.setMyLocationEnabled(true);
         map.setOnMapClickListener(this);
+        map.setOnPolygonClickListener(this);
     }
 
     @Override
@@ -71,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             polygonOptions.strokeWidth(5f);
             //polygonOptions.fillColor(shadeColor);
             polygon = map.addPolygon(polygonOptions);
+            polygon.setClickable(true);
         } else {
             if (polygon != null) {
                 polygon.remove();
@@ -173,5 +176,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
 
         return new LatLng(latitude / n, longitude / n);
+    }
+
+    @Override
+    public void onPolygonClick(Polygon polygon) {
+        Toast.makeText(this,"Polygon clicked",Toast.LENGTH_LONG).show();
     }
 }
